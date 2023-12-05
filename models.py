@@ -1,5 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Table, create_engine, JSON, Text
-from sqlalchemy.orm import relationship, sessionmaker
+from sqlalchemy import Column, Integer, String, ForeignKey, create_engine, JSON, Text
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -57,6 +56,9 @@ class Majors(Base):
     ID = Column(Integer, primary_key=True)
     MajorName = Column(String(255), nullable=False, unique=True)
 
+    def text(self):
+        print(self.MajorName)
+
 class CollegesMajors(Base):
     __tablename__ = 'colleges_majors'
     ID = Column(Integer, primary_key=True)
@@ -64,8 +66,7 @@ class CollegesMajors(Base):
     MajorsID = Column(Integer, ForeignKey('majors.ID'), nullable=False)
     MajorsCategoryID = Column(Integer, ForeignKey('majors_category.ID'))
     TagMajorsID = Column(Integer, ForeignKey('tag_majors.ID'))
-    majors_category = relationship(MajorsCategory)
-    tag_majors = relationship(TagMajors)
+
 
 
 engine = create_engine("mysql+pymysql://root:123456@localhost:3306/collegesandmajors",echo=True)

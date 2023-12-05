@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import re
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -14,13 +13,11 @@ def AddMajors(url, headers, i):
     engine = create_engine("mysql+pymysql://root:123456@localhost:3306/collegesandmajors", echo=True)
     Session = sessionmaker(bind=engine)
     session = Session()
-    global MajorsCategory
-    global TagMajors
-    global Majors
     response = requests.get(url + str(i), headers=headers)
     if response.ok:
         content = response.text
         soup = BeautifulSoup(content, "html.parser")
+
         # 创建实例化对象
         # MajorsCategory = MajorsCategory()
         # TagMajors = TagMajors()
@@ -64,7 +61,10 @@ def AddMajors(url, headers, i):
 
                 majorsCategory.text()
 
-
-
     else:
+        with open('wrong_majors.txt', 'a') as file:
+            file.write(url + str(i) + "专业类型信息错误")
+            file.write('\n')
         return 0
+
+    return 1
