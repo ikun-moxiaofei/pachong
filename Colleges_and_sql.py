@@ -28,13 +28,13 @@ def AddColleges(url, headers, i):
         CollegeName_div = soup.find("div", attrs={"class": "color-222 font-24 font-bold flex col-center"})
         # 有的大学已经下线了？？？例如https://daxue.163.com/web/university/detail/902
         if (CollegeName_div == None):
-            return
+            return 0
 
         CollegeName = CollegeName_div.find("span")
         colleges.CollegeName = CollegeName.string
 
         if (session.query(Colleges).filter_by(CollegeName=colleges.CollegeName).first() is not None):
-            return
+            return 0
 
         """
         **State**: 存储学校所省，非空
@@ -192,5 +192,13 @@ def AddColleges(url, headers, i):
 
         colleges.text()
 
-    session.add(colleges)
-    session.commit()
+        session.add(colleges)
+        session.commit()
+
+    else:
+        with open('wrong_colleges.txt', 'a') as file:
+            file.write(url + str(i) + "学校基本信息错误")
+            file.write('\n')
+        return 0
+
+    return 1

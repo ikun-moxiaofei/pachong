@@ -41,10 +41,16 @@ class MajorsCategory(Base):
     ID = Column(Integer, primary_key=True)
     MajorsCategoryName = Column(String(255), nullable=False, unique=True)
 
+    def text(self):
+        print(self.MajorsCategoryName)
+
 class TagMajors(Base):
     __tablename__ = 'tag_majors'
     ID = Column(Integer, primary_key=True)
     TagMajorsName = Column(String(255), nullable=False, unique=True)
+
+    def text(self):
+        print(self.TagMajorsName)
 
 class Majors(Base):
     __tablename__ = 'majors'
