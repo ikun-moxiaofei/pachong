@@ -9,7 +9,7 @@ headers = {
 }
 url = "https://daxue.163.com/web/university/detail/"
 
-for i in range(1, 10):
+for i in range(1, 2875):
 
     # AddColleges返回0表示爬取大学基本出现错误，可以是因为重复或者大学不存在，即直接跳过本次循环
     flag = AddColleges(url, headers, i)
